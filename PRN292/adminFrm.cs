@@ -10,11 +10,20 @@ using System.Windows.Forms;
 
 namespace PRN292
 {
-    public partial class Form1 : Form
+    public partial class adminFrm : Form
     {
-        public Form1()
+        public adminFrm()
         {
             InitializeComponent();
+        }
+        public adminFrm(string userID) : this()
+        {
+
+        }
+
+        private void adminFrm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -46,14 +46,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="adminFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="adminFrm.Designer.cs">
+      <DependentUpon>adminFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="loginFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="loginFrm.Designer.cs">
+      <DependentUpon>loginFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="adminFrm.resx">
+      <DependentUpon>adminFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="loginFrm.resx">
+      <DependentUpon>loginFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,6 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MilkTea\MilkTea.csproj">
+      <Project>{d39eb958-e394-4d39-99cc-55f8336a7ce3}</Project>
+      <Name>MilkTea</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
