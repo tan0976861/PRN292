@@ -12,4 +12,9 @@ namespace MilkTea
         public string Password { get; set; }
         public string RoleID { get; set; }
     }
+    public class Product
+    {
+        public string ProductID { get; set; }
+
+    }
 }
