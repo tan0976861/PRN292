@@ -16,6 +16,7 @@ namespace MilkTea
     {
         public string ProductID { get; set; }
         public string ProductName { get; set; }
+        public string Price { get; set; }
 
     }
 }
