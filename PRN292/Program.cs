@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace PRN292
 {
     static class Program
-    {
+    {//fdfcdgs
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
