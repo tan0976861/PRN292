@@ -16,7 +16,7 @@ namespace MilkTea
         }
         public string GetConnectionString()
         {
-            string strConnection = @"Data Source=SE140290\SQLEXPRESS;Initial Catalog=MilkTea;Persist Security Info=True;User ID=sa; Password=1009";
+            string strConnection = @"Data Source=DESKTOP-1Q0I8B0\HOANGTG;Initial Catalog=MilkTea;Persist Security Info=True;User ID=sa; Password=026042855";
             return strConnection;
         }
         public string CheckLogin(string UserID,string Password)
