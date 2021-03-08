@@ -33,17 +33,21 @@ namespace PRN292
             }
             if (error.Equals(""))
             {
-                UserDao user = new UserDao();
-                string role = user.CheckLogin(UserID, Password);
-                if (role.Equals("Failed"))
-                {
-                    MessageBox.Show("UserID or Password wrong !");
+                User user = new User();
+                UserDao userDAO = new UserDao();
+                user = userDAO.CheckLogin(UserID, Password);
+                if(user != null) {
+                    if (user.RoleID.Equals("admin"))
+                    {
+                        adminFrm ad = new adminFrm(UserID);
+                        DialogResult dialog = ad.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong password id");
+                    }
                 }
-                else
-                {
-                    adminFrm ad = new adminFrm(UserID);
-                    DialogResult dialog = ad.ShowDialog();
-                }
+                
             }
             else
             {

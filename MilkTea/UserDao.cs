@@ -9,37 +9,28 @@ namespace MilkTea
 {
     public class UserDao
     {
-        string StrConnection;
         public UserDao()
         {
-            StrConnection = GetConnectionString();
         }
-        public string GetConnectionString()
+        string StrConnection = "server=SE140290\\SQLEXPRESS;database=MilkTea;uid=sa;pwd=1009";
+        public User CheckLogin(string UserID,string Password)
         {
-            string strConnection = @"Data Source=SE140290\SQLEXPRESS;Initial Catalog=MilkTea;Persist Security Info=True;User ID=sa; Password=1009";
-            return strConnection;
-        }
-        public string CheckLogin(string UserID,string Password)
-        {
-            string role = "Failed";
-            string sql = "Select RoleID From tblUsers Where UserID = @ID and Password = @Password";
+            User user = null;
+            string sql = "Select RoleID From tblUsers Where UserID = @U and Password = @P";
             SqlConnection cnn = new SqlConnection(StrConnection);
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@ID", UserID);
-            cmd.Parameters.AddWithValue("@Password", Password);
+            cmd.Parameters.AddWithValue("@U", UserID);
+            cmd.Parameters.AddWithValue("@P", Password);
             try
             {
-                if (cnn.State == ConnectionState.Closed)
-                {
-                    cnn.Open();
-                }
-                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                cnn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
                     if (reader.Read())
                     {
-                        User user = new User();
-                        role = reader.GetString(1);
+                        user = new User();
+                        user.RoleID = reader.GetString(0);
                     }
                 }
             }
@@ -48,7 +39,7 @@ namespace MilkTea
                 throw new Exception(e.Message);
             }
             cnn.Close();
-            return role;
+            return user;
         }
     }
 }
