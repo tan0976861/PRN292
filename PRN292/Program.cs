@@ -18,5 +18,5 @@ namespace PRN292
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new loginFrm());
         }
-    }
+    }//j4gfjr
 }
