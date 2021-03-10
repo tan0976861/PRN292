@@ -5,29 +5,20 @@ using System.Linq;
 
 namespace DAL
 {
-    public partial class DBcontext : DbContext
+    public partial class DBContext : DbContext
     {
-        public DBcontext()
-            : base("name=DBcontext")
+        public DBContext()
+            : base("name=DBContext")
         {
         }
 
-        public virtual DbSet<tblU> tblU { get; set; }
         public virtual DbSet<tblUsers> tblUsers { get; set; }
-
+ 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<tblU>()
+            modelBuilder.Entity<tblUsers>()
                 .Property(e => e.UserID)
-                .IsFixedLength();
-
-            modelBuilder.Entity<tblU>()
-                .Property(e => e.Password)
-                .IsFixedLength();
-
-            modelBuilder.Entity<tblU>()
-                .Property(e => e.RoleID)
-                .IsFixedLength();
+                .IsUnicode(false);
         }
     }
 }

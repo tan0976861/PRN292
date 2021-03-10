@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C2382D82-57F5-44A6-8E36-6E74300A9A2F}</ProjectGuid>
+    <ProjectGuid>{56719FE0-25C2-49CE-9503-3FF085992762}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DAL</RootNamespace>
@@ -53,11 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="DBcontext.cs" />
-    <Compile Include="Model.cs" />
+    <Compile Include="UserModel.cs" />
+    <Compile Include="DBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="tblU.cs" />
     <Compile Include="tblUsers.cs" />
   </ItemGroup>
   <ItemGroup>

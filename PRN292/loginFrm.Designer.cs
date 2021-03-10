@@ -57,6 +57,7 @@ namespace PRN292
             // 
             this.txtPassword.Location = new System.Drawing.Point(307, 140);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(242, 22);
             this.txtPassword.TabIndex = 2;
             // 
@@ -90,7 +91,7 @@ namespace PRN292
             this.Controls.Add(this.btnLogin);
             this.Name = "loginFrm";
             this.Text = "Login";
-            this.Load += new System.EventHandler(this.loginFrm_Load);
+            this.Load += new System.EventHandler(this.loginFrm_Load_1);
             this.ResumeLayout(false);
             this.PerformLayout();
 

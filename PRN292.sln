@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN292", "PRN292\PRN292.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilkTea", "MilkTea\MilkTea.csproj", "{D39EB958-E394-4D39-99CC-55F8336A7CE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{C2382D82-57F5-44A6-8E36-6E74300A9A2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{56719FE0-25C2-49CE-9503-3FF085992762}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{D39EB958-E394-4D39-99CC-55F8336A7CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D39EB958-E394-4D39-99CC-55F8336A7CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D39EB958-E394-4D39-99CC-55F8336A7CE3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2382D82-57F5-44A6-8E36-6E74300A9A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2382D82-57F5-44A6-8E36-6E74300A9A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2382D82-57F5-44A6-8E36-6E74300A9A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2382D82-57F5-44A6-8E36-6E74300A9A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56719FE0-25C2-49CE-9503-3FF085992762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56719FE0-25C2-49CE-9503-3FF085992762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56719FE0-25C2-49CE-9503-3FF085992762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56719FE0-25C2-49CE-9503-3FF085992762}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

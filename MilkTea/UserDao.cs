@@ -9,28 +9,38 @@ namespace MilkTea
 {
     public class UserDao
     {
+        string strConnection;
         public UserDao()
         {
+            strConnection = getConnectionString();
         }
-        string StrConnection = "server=SE140290\\SQLEXPRESS;database=MilkTea;uid=sa;pwd=1009";
+
+        public string getConnectionString()
+        {
+            string strConnection = @"Data Source=SE140290\SQLEXPRESS;Initial Catalog=MilkTea;Persist Security Info=True;User ID=sa; Password=1009";
+            return strConnection;
+        }
         public User CheckLogin(string UserID,string Password)
         {
             User user = null;
-            string sql = "Select RoleID From tblUsers Where UserID = @U and Password = @P";
-            SqlConnection cnn = new SqlConnection(StrConnection);
+            string sql = "Select RoleID From tblUsers Where UserID = @User and Password = @Password";
+            SqlConnection cnn = new SqlConnection(strConnection);
             SqlCommand cmd = new SqlCommand(sql, cnn);
-            cmd.Parameters.AddWithValue("@U", UserID);
-            cmd.Parameters.AddWithValue("@P", Password);
+            cmd.Parameters.AddWithValue("@User", UserID);
+            cmd.Parameters.AddWithValue("@Password", Password);
             try
             {
-                cnn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+                if (cnn.State == ConnectionState.Closed)
+                {
+                    cnn.Open();
+                }
+                SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 if (reader.HasRows)
                 {
                     if (reader.Read())
                     {
                         user = new User();
-                        user.RoleID = reader.GetString(0);
+                        user.RoleID = reader.GetString(0); 
                     }
                 }
             }
