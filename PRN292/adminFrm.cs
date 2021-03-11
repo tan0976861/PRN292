@@ -15,6 +15,7 @@ namespace PRN292
     {
         MilkTeaDAO dao = new MilkTeaDAO();
         List<MilkTeaDTO> list;
+        List<CategoryDTO> listCategory;
         public adminFrm()
         {
             InitializeComponent();
@@ -27,19 +28,32 @@ namespace PRN292
         }
         public void LoadData()
         {
-            list = dao.GetListMilkTea();
+            listCategory = dao.GetListCategory();
+            list = dao.GetListMilkTea(listCategory);
 
             txtMilkTeaID.DataBindings.Clear();
             txtMilkTeaName.DataBindings.Clear();
             txtMilkTeaQuantity.DataBindings.Clear();
             txtMilkTeaName.DataBindings.Clear();
-            txtCategory.DataBindings.Clear();
 
             txtMilkTeaID.DataBindings.Add("Text", list, "MilkTeaID");
             txtMilkTeaName.DataBindings.Add("Text", list, "MilkTeaName");
             txtMilkTeaQuantity.DataBindings.Add("Text", list, "Quantity");
-            txtMilkTeaPrice.DataBindings.Add("Text", list, "Price");
-            //txtCategory.DataBindings.Add("Text", list, "CategoryName");
+            //txtMilkTeaPrice.DataBindings.Add("Text", list, "Price");
+            
+            cboCategory.Items.Clear();
+            foreach (CategoryDTO dto in listCategory)
+            {
+                cboCategory.Items.Add(dto.CategoryName);
+            }
+            //cboCategory.DataSource = listCategory;
+            //cboCategory.DisplayMember = "CategoryName";
+            //foreach (CategoryDTO dto in listCategory)
+            //{
+            //    if(dto.CategoryName.Equals())
+            //        cboCategory.SelectedItem = dto.CategoryName;
+            //}
+
             txtMilkTeaID.Enabled = false;
             dgvMilkTea.DataSource = list;
 
@@ -57,9 +71,27 @@ namespace PRN292
 
         private void dgvMilkTea_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (txtMilkTeaID.Text == "")
+            {
+                MessageBox.Show("Please choose MilkTea you want to remove. ", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (MessageBox.Show("Do you want to delete ?", "Announce", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                string MilkTeaID = txtMilkTeaID.Text;
+                dao.Delete(MilkTeaID);
+                LoadData();
+                MessageBox.Show("Delete successfully. ", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }   
     
 }
