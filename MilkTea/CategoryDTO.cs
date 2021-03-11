@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace MilkTea
 {
-    public class User
+    public class CategoryDTO
     {
-        public string UserID { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
+        public string CategoryID { get; set; }
+        public string CategoryName { get; set; }
     }
 }

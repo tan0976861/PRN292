@@ -56,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addMilkTeaFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addMilkTeaFrm.Designer.cs">
+      <DependentUpon>addMilkTeaFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="adminFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="addMilkTeaFrm.resx">
+      <DependentUpon>addMilkTeaFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="adminFrm.resx">
       <DependentUpon>adminFrm.cs</DependentUpon>
     </EmbeddedResource>

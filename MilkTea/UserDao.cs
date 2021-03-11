@@ -9,22 +9,13 @@ namespace MilkTea
 {
     public class UserDao
     {
-        string strConnection;
-        public UserDao()
-        {
-            strConnection = getConnectionString();
-        }
+        public UserDao() { }
 
-        public string getConnectionString()
+        public string CheckLogin(string UserID,string Password)
         {
-            string strConnection = @"Data Source=SE140290\SQLEXPRESS;Initial Catalog=MilkTea;Persist Security Info=True;User ID=sa; Password=1009";
-            return strConnection;
-        }
-        public User CheckLogin(string UserID,string Password)
-        {
-            User user = null;
-            string sql = "Select RoleID From tblUsers Where UserID = @User and Password = @Password";
-            SqlConnection cnn = new SqlConnection(strConnection);
+            string role = "fail";
+            string sql = "Select Role From Users Where UserID = @User and Password = @Password";
+            SqlConnection cnn = DBConnection.GetConnection();
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@User", UserID);
             cmd.Parameters.AddWithValue("@Password", Password);
@@ -39,8 +30,7 @@ namespace MilkTea
                 {
                     if (reader.Read())
                     {
-                        user = new User();
-                        user.RoleID = reader.GetString(0); 
+                        role = reader.GetString(0); 
                     }
                 }
             }
@@ -49,7 +39,7 @@ namespace MilkTea
                 throw new Exception(e.Message);
             }
             cnn.Close();
-            return user;
+            return role;
         }
     }
 }

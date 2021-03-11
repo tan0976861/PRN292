@@ -13,9 +13,13 @@ namespace PRN292
 {
     public partial class loginFrm : Form
     {
-        UserModel us ;
         UserDao dao;
         public loginFrm()
+        {
+            InitializeComponent();
+            dao = new UserDao();
+        }
+        public loginFrm(string user)
         {
             InitializeComponent();
             dao = new UserDao();
@@ -37,17 +41,24 @@ namespace PRN292
             if (error.Equals(""))
             {
 
-                User user = dao.CheckLogin(UserID, Password);
-
-                if (user.RoleID.Equals("adminn"))
-                {
-                    adminFrm ad = new adminFrm(UserID);
-                    DialogResult dialog = ad.ShowDialog();
+                string role = dao.CheckLogin(UserID, Password);
+                if (role.Equals("fail"))
+                    {
+                    MessageBox.Show("ID or Password is not correct");
                 }
                 else
                 {
-                    MessageBox.Show("a");
+                    if (role.Equals("AD"))
+                    {
+                        adminFrm ad = new adminFrm(UserID);
+                        DialogResult dialog = ad.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("a");
+                    }
                 }
+                
             }
             else
             {
