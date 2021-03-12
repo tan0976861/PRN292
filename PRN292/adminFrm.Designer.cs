@@ -29,6 +29,7 @@ namespace PRN292
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtHello = new System.Windows.Forms.Label();
             this.dgvMilkTea = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,7 +46,9 @@ namespace PRN292
             this.btnDelete = new System.Windows.Forms.Button();
             this.lblHello = new System.Windows.Forms.Label();
             this.cboCategory = new System.Windows.Forms.ComboBox();
+            this.error1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMilkTea)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.error1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtHello
@@ -185,6 +188,10 @@ namespace PRN292
             this.cboCategory.Size = new System.Drawing.Size(247, 24);
             this.cboCategory.TabIndex = 17;
             // 
+            // error1
+            // 
+            this.error1.ContainerControl = this;
+            // 
             // adminFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -210,6 +217,7 @@ namespace PRN292
             this.Text = "adminFrm";
             this.Load += new System.EventHandler(this.adminFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMilkTea)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.error1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,5 +241,6 @@ namespace PRN292
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Label lblHello;
         private System.Windows.Forms.ComboBox cboCategory;
+        private System.Windows.Forms.ErrorProvider error1;
     }
 }

@@ -10,5 +10,14 @@ namespace MilkTea
     {
         public string CategoryID { get; set; }
         public string CategoryName { get; set; }
+        public override string ToString()
+        {
+            return CategoryID + "-" + CategoryName;
+        }
+        public CategoryDTO(string categoryID,string categoryName)
+        {
+            CategoryID = categoryID;
+            CategoryName = categoryName;
+        }
     }
 }

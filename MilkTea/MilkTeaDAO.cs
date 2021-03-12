@@ -12,11 +12,11 @@ namespace MilkTea
     {
         public MilkTeaDAO() { 
         }
-        public List<MilkTeaDTO> GetListMilkTea(List<CategoryDTO> categoryDTOs)
+        public List<MilkTeaDTO> GetListMilkTea()
         {
             List<MilkTeaDTO> list = new List<MilkTeaDTO>();
             
-            string sql = "select mt.MilkTeaID,mt.MilkTeaName,mt.Quantity,mt.Price,ct.CategoryName " +
+            string sql = "select mt.MilkTeaID,mt.MilkTeaName,mt.Quantity,mt.Price,ct.CategoryName,mt.CategoryID " +
                 "From MilkTeas as mt,Category as ct Where ct.CategoryID = mt.CategoryID";
             SqlConnection conn = DBConnection.GetConnection();
             SqlCommand cmd = new SqlCommand(sql, conn);
@@ -26,26 +26,25 @@ namespace MilkTea
             {
                 while(read.Read())
                 {
-                    
-                    //{
-                    //    MilkTeaID = read.GetString(0),
-                    //    MilkTeaName = read.GetString(1),
-                    //    Quantity = read.GetInt32(2),
-                    //    Price = (float)read.GetDouble(3),
-                    //    Category = read.GetString(4);
-
-                    //};
-                    string MilkTeaID = read.GetString(0);
-                    string MilkTeaName = read.GetString(1);
-                    int Quantity = read.GetInt32(2);
-                    float Price = (float)read.GetDouble(3);
-                    string Category = read.GetString(4);
-                    CategoryDTO categoryDTO = null;
-                    foreach (CategoryDTO dto in categoryDTOs)
+                    MilkTeaDTO milkTeaDTO = new MilkTeaDTO()
                     {
-                        if (dto.CategoryID.Equals(Category)) categoryDTO = dto;
-                    }
-                    MilkTeaDTO milkTeaDTO = new MilkTeaDTO(MilkTeaID, MilkTeaName, Quantity, Price, Category, categoryDTO);
+                        MilkTeaID = read.GetString(0),
+                        MilkTeaName = read.GetString(1),
+                        Quantity = read.GetInt32(2),
+                        Price = (float)read.GetDouble(3),
+                        Category = read.GetString(4)
+                    };
+                //string M  ilkTeaID = read.GetString(0);
+                //    string MilkTeaName = read.GetString(1);
+                //    int Quantity = read.GetInt32(2);
+                //    float Price = (float)read.GetDouble(3);
+                //    string Category = read.GetString(4);
+                    //CategoryDTO categoryDTO = null;
+                    //foreach (CategoryDTO dto in categoryDTOs)
+                    //{
+                    //    if (dto.CategoryID.Equals(Category)) categoryDTO = dto;
+                    //}
+                    //MilkTeaDTO milkTeaDTO = new MilkTeaDTO(MilkTeaID, MilkTeaName, Quantity, Price, Category, categoryDTO);
                     list.Add(milkTeaDTO);
                 }
             }
@@ -124,32 +123,36 @@ namespace MilkTea
             {
                 while (reader.Read())
                 {
-                    CategoryDTO dto = new CategoryDTO
-                    {
-                        CategoryID = reader.GetString(0),
-                        CategoryName = reader.GetString(1)
-                    };
-                    list.Add(dto);
+                    //CategoryDTO dto = new CategoryDTO
+                    //{
+                    //    CategoryID = reader.GetString(0),
+                    //    CategoryName = reader.GetString(1)
+                    //};
+                    string CategoryID = reader.GetString(0);
+                    string CategoryName = reader.GetString(1);
+                    list.Add(new CategoryDTO(CategoryID, CategoryName));
                 }
             }
             conn.Close();
             return list;
         }
 
-        //public bool Update(MilkTeaDTO dto)
-        //{
-        //    bool check = false;
-        //    string sql = "Update MilkTeas Set BookName = @Name, BookPrice = @Price Where BookID = @ID";
-        //    SqlConnection conn = DBConnection.GetConnection();
-        //    conn.Open();
-        //    SqlCommand cmd = new SqlCommand(sql, conn);
-        //    cmd.Parameters.AddWithValue("@ID", dto.BookID);
-        //    cmd.Parameters.AddWithValue("@Name", dto.BookName);
-        //    cmd.Parameters.AddWithValue("@Price", dto.BookPrice);
-        //    check = cmd.ExecuteNonQuery() > 0;
-        //    conn.Close();
-        //    return check;
-        //}
+        public bool Update(MilkTeaDTO dto)
+        {
+            bool check = false;
+            string sql = "Update MilkTeas Set MilkTeaName = @Name, Quantity = @Quantity, Price = @Price, CategoryID = @Category Where MilkTeaID = @ID";
+            SqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@ID", dto.MilkTeaID);
+            cmd.Parameters.AddWithValue("@Name", dto.MilkTeaName);
+            cmd.Parameters.AddWithValue("@Quantity", dto.Quantity);
+            cmd.Parameters.AddWithValue("@Price", dto.Price);
+            cmd.Parameters.AddWithValue("@Category", dto.Category);
+            check = cmd.ExecuteNonQuery() > 0;
+            conn.Close();
+            return check;
+        }
 
         public bool Delete(string id)
         {

@@ -13,15 +13,16 @@ namespace MilkTea
         public int Quantity { get; set; }
         public float Price { get; set; }
         public string Category { get; set; }
-        public CategoryDTO categoryDTO { get; set; }
-        public MilkTeaDTO(string milkTeaID, string milkTeaName, int quantity,float price,string category, CategoryDTO dto)
-        {
-            MilkTeaID = milkTeaID;
-            MilkTeaName = milkTeaName;
-            Quantity = quantity;
-            Price = price;
-            Category = category;
-            categoryDTO = dto;
-        }
+        
+        //public CategoryDTO categoryDTO { get; set; }
+        //public MilkTeaDTO(string milkTeaID, string milkTeaName, int quantity,float price,string category, CategoryDTO dto)
+        //{
+        //    MilkTeaID = milkTeaID;
+        //    MilkTeaName = milkTeaName;
+        //    Quantity = quantity;
+        //    Price = price;
+        //    Category = category;
+        //    categoryDTO = dto;
+        //}
     }
 }
