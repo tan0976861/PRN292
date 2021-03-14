@@ -73,7 +73,6 @@ namespace PRN292
             else
             {
                 error1.SetError(txtMilkTeaName,"");
-                return true;
             }
             return true;
         }
@@ -83,30 +82,29 @@ namespace PRN292
 
             if (string.IsNullOrEmpty(txtMilkTeaQuantity.Text))
             {
-                error2.SetError(txtMilkTeaQuantity, "Quantity can't be blank !");
+                error1.SetError(txtMilkTeaQuantity, "Quantity can't be blank !");
                 txtMilkTeaQuantity.Focus();
                 return false;
             }
             if (txtMilkTeaQuantity.Text.Length > 50)
             {
-                error2.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
+                error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
                 txtMilkTeaQuantity.Focus();
                 return false;
             }
             
             if(!Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity))
             {
-                error2.SetError(txtMilkTeaQuantity, "Quantity only contains number characters");
+                error1.SetError(txtMilkTeaQuantity, "Quantity only contains number characters");
                 txtMilkTeaQuantity.Focus();
                 return false;
             }
+            else
+            {
+                error1.SetError(txtMilkTeaQuantity, "");
+            }
+
             
-            //if (Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity2))
-            //{
-            //    error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
-            //    txtMilkTeaQuantity.Focus();
-            //    return false;
-            //}
             return true;
 
         }
@@ -116,30 +114,27 @@ namespace PRN292
 
             if (string.IsNullOrEmpty(txtMilkTeaPrice.Text))
             {
-                error3.SetError(txtMilkTeaPrice, "Price can't be blank !");
+                error1.SetError(txtMilkTeaPrice, "Price can't be blank !");
                 txtMilkTeaPrice.Focus();
                 return false;
             }
             if (txtMilkTeaPrice.Text.Length > 50)
             {
-                error3.SetError(txtMilkTeaPrice, "Price max length is 50!");
+                error1.SetError(txtMilkTeaPrice, "Price max length is 50!");
                 txtMilkTeaPrice.Focus();
                 return false;
             }
 
             if (!Regex.IsMatch(txtMilkTeaPrice.Text, regexQuantity))
             {
-                error3.SetError(txtMilkTeaPrice, "Price only contains number characters");
+                error1.SetError(txtMilkTeaPrice, "Price only contains number characters");
                 txtMilkTeaPrice.Focus();
                 return false;
             }
-
-            //if (Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity2))
-            //{
-            //    error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
-            //    txtMilkTeaQuantity.Focus();
-            //    return false;
-            //}
+            else
+            {
+                error1.SetError(txtMilkTeaPrice, "");
+            }
             return true;
 
         }
