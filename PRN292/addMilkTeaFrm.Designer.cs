@@ -37,19 +37,13 @@ namespace PRN292
             this.label5 = new System.Windows.Forms.Label();
             this.txtMilkTeaID = new System.Windows.Forms.TextBox();
             this.txtMilkTeaName = new System.Windows.Forms.TextBox();
-            this.txtQuantity = new System.Windows.Forms.TextBox();
-            this.txtPrice = new System.Windows.Forms.TextBox();
-            this.txtCategory = new System.Windows.Forms.TextBox();
-            this.errorMilkTeaID = new System.Windows.Forms.ErrorProvider(this.components);
-            this.errorMilkTeaName = new System.Windows.Forms.ErrorProvider(this.components);
-            this.errorQuantity = new System.Windows.Forms.ErrorProvider(this.components);
-            this.errorPrice = new System.Windows.Forms.ErrorProvider(this.components);
+            this.txtMilkTeaQuantity = new System.Windows.Forms.TextBox();
+            this.txtMilkTeaPrice = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.errorMilkTeaID)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorMilkTeaName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorQuantity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorPrice)).BeginInit();
+            this.error1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.cboCategory = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.error1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -103,6 +97,7 @@ namespace PRN292
             this.txtMilkTeaID.Name = "txtMilkTeaID";
             this.txtMilkTeaID.Size = new System.Drawing.Size(287, 22);
             this.txtMilkTeaID.TabIndex = 5;
+            this.txtMilkTeaID.TextChanged += new System.EventHandler(this.txtMilkTeaID_TextChanged);
             // 
             // txtMilkTeaName
             // 
@@ -111,45 +106,19 @@ namespace PRN292
             this.txtMilkTeaName.Size = new System.Drawing.Size(287, 22);
             this.txtMilkTeaName.TabIndex = 6;
             // 
-            // txtQuantity
+            // txtMilkTeaQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(231, 163);
-            this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(287, 22);
-            this.txtQuantity.TabIndex = 7;
+            this.txtMilkTeaQuantity.Location = new System.Drawing.Point(231, 163);
+            this.txtMilkTeaQuantity.Name = "txtMilkTeaQuantity";
+            this.txtMilkTeaQuantity.Size = new System.Drawing.Size(287, 22);
+            this.txtMilkTeaQuantity.TabIndex = 7;
             // 
-            // txtPrice
+            // txtMilkTeaPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(231, 226);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(287, 22);
-            this.txtPrice.TabIndex = 8;
-            // 
-            // txtCategory
-            // 
-            this.txtCategory.Location = new System.Drawing.Point(231, 281);
-            this.txtCategory.Name = "txtCategory";
-            this.txtCategory.Size = new System.Drawing.Size(287, 22);
-            this.txtCategory.TabIndex = 9;
-            // 
-            // errorMilkTeaID
-            // 
-            this.errorMilkTeaID.ContainerControl = this;
-            // 
-            // errorMilkTeaName
-            // 
-            this.errorMilkTeaName.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
-            this.errorMilkTeaName.ContainerControl = this;
-            // 
-            // errorQuantity
-            // 
-            this.errorQuantity.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
-            this.errorQuantity.ContainerControl = this;
-            // 
-            // errorPrice
-            // 
-            this.errorPrice.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
-            this.errorPrice.ContainerControl = this;
+            this.txtMilkTeaPrice.Location = new System.Drawing.Point(231, 226);
+            this.txtMilkTeaPrice.Name = "txtMilkTeaPrice";
+            this.txtMilkTeaPrice.Size = new System.Drawing.Size(287, 22);
+            this.txtMilkTeaPrice.TabIndex = 8;
             // 
             // btnAdd
             // 
@@ -159,6 +128,7 @@ namespace PRN292
             this.btnAdd.TabIndex = 10;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnCancel
             // 
@@ -168,17 +138,30 @@ namespace PRN292
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // error1
+            // 
+            this.error1.ContainerControl = this;
+            // 
+            // cboCategory
+            // 
+            this.cboCategory.FormattingEnabled = true;
+            this.cboCategory.Location = new System.Drawing.Point(231, 275);
+            this.cboCategory.Name = "cboCategory";
+            this.cboCategory.Size = new System.Drawing.Size(287, 24);
+            this.cboCategory.TabIndex = 12;
             // 
             // addMilkTeaFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(846, 486);
+            this.Controls.Add(this.cboCategory);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.txtCategory);
-            this.Controls.Add(this.txtPrice);
-            this.Controls.Add(this.txtQuantity);
+            this.Controls.Add(this.txtMilkTeaPrice);
+            this.Controls.Add(this.txtMilkTeaQuantity);
             this.Controls.Add(this.txtMilkTeaName);
             this.Controls.Add(this.txtMilkTeaID);
             this.Controls.Add(this.label5);
@@ -188,10 +171,8 @@ namespace PRN292
             this.Controls.Add(this.label1);
             this.Name = "addMilkTeaFrm";
             this.Text = "addMilkTeaFrm";
-            ((System.ComponentModel.ISupportInitialize)(this.errorMilkTeaID)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorMilkTeaName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorQuantity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorPrice)).EndInit();
+            this.Load += new System.EventHandler(this.addMilkTeaFrm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.error1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,14 +187,11 @@ namespace PRN292
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtMilkTeaID;
         private System.Windows.Forms.TextBox txtMilkTeaName;
-        private System.Windows.Forms.TextBox txtQuantity;
-        private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.TextBox txtCategory;
-        private System.Windows.Forms.ErrorProvider errorMilkTeaID;
+        private System.Windows.Forms.TextBox txtMilkTeaQuantity;
+        private System.Windows.Forms.TextBox txtMilkTeaPrice;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ErrorProvider errorMilkTeaName;
-        private System.Windows.Forms.ErrorProvider errorQuantity;
-        private System.Windows.Forms.ErrorProvider errorPrice;
+        private System.Windows.Forms.ErrorProvider error1;
+        private System.Windows.Forms.ComboBox cboCategory;
     }
 }

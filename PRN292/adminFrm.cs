@@ -28,12 +28,12 @@ namespace PRN292
             InitializeComponent();
             lblHello.Text = "Hello " +  user;
         }
-        private void LoadData()
+        public void LoadData()
         {
             listCategory = dao.GetListCategory();
             list = dao.GetListMilkTea();
 
-            txtMilkTeaID.DataBindings.Clear();
+           /* txtMilkTeaID.DataBindings.Clear();
             txtMilkTeaName.DataBindings.Clear();
             txtMilkTeaQuantity.DataBindings.Clear();
             txtMilkTeaPrice.DataBindings.Clear();
@@ -41,7 +41,7 @@ namespace PRN292
             txtMilkTeaID.DataBindings.Add("Text", list, "MilkTeaID");
             txtMilkTeaName.DataBindings.Add("Text", list, "MilkTeaName");
             txtMilkTeaQuantity.DataBindings.Add("Text", list, "Quantity");
-            txtMilkTeaPrice.DataBindings.Add("Text", list, "Price");
+            txtMilkTeaPrice.DataBindings.Add("Text", list, "Price");*/
 
             cboCategory.Items.Clear();
             foreach (CategoryDTO dto in listCategory)
@@ -51,11 +51,6 @@ namespace PRN292
             //cboCategory.DataSource = listCategory;
             //cboCategory.DisplayMember = "CategoryID - CategoryName";
             
-            //foreach (CategoryDTO dto in listCategory)
-            //{
-            //    //if (dto.Equals)
-            //        cboCategory.SelectedItem = new CategoryDTO(dto.CategoryID,dto.CategoryName);
-            //}
 
             txtMilkTeaID.Enabled = false;
             dgvMilkTea.DataSource = list;
@@ -72,9 +67,9 @@ namespace PRN292
             else if (txtMilkTeaName.Text.Length >= 50)
             {
                 error1.SetError(txtMilkTeaName, "Name max length is 50!");
+                txtMilkTeaName.Focus();
                 return false;
             }
-
             else
             {
                 error1.SetError(txtMilkTeaName,"");
@@ -84,34 +79,67 @@ namespace PRN292
         }
         private Boolean CheckMilkTeaQuantity()
         {
-            string regexQuantity = @"[1-9]+";
-            string regexQuantity2 = @"^-\d";
-            //if (string.IsNullOrEmpty(txtMilkTeaQuantity.Text))
+            string regexQuantity = @"^\d+$";
+
+            if (string.IsNullOrEmpty(txtMilkTeaQuantity.Text))
+            {
+                error2.SetError(txtMilkTeaQuantity, "Quantity can't be blank !");
+                txtMilkTeaQuantity.Focus();
+                return false;
+            }
+            if (txtMilkTeaQuantity.Text.Length > 50)
+            {
+                error2.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
+                txtMilkTeaQuantity.Focus();
+                return false;
+            }
+            
+            if(!Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity))
+            {
+                error2.SetError(txtMilkTeaQuantity, "Quantity only contains number characters");
+                txtMilkTeaQuantity.Focus();
+                return false;
+            }
+            
+            //if (Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity2))
             //{
-            //    error1.SetError(txtMilkTeaQuantity, "Quantity can't be blank !");
+            //    error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
             //    txtMilkTeaQuantity.Focus();
             //    return false;
             //}
-            if(txtMilkTeaQuantity.Text.Length > 50)
+            return true;
+
+        }
+        private Boolean CheckMilkTeaPrice()
+        {
+            string regexQuantity = @"^\d+(.)?\d+$";
+
+            if (string.IsNullOrEmpty(txtMilkTeaPrice.Text))
             {
-                error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
-                txtMilkTeaQuantity.Focus();
+                error3.SetError(txtMilkTeaPrice, "Price can't be blank !");
+                txtMilkTeaPrice.Focus();
                 return false;
             }
-            
-            else if(!Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity))
+            if (txtMilkTeaPrice.Text.Length > 50)
             {
-                error1.SetError(txtMilkTeaQuantity, "Quantity only contains number characters");
-                txtMilkTeaQuantity.Focus();
+                error3.SetError(txtMilkTeaPrice, "Price max length is 50!");
+                txtMilkTeaPrice.Focus();
                 return false;
             }
-            
-            else if (Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity2))
+
+            if (!Regex.IsMatch(txtMilkTeaPrice.Text, regexQuantity))
             {
-                error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
-                txtMilkTeaQuantity.Focus();
+                error3.SetError(txtMilkTeaPrice, "Price only contains number characters");
+                txtMilkTeaPrice.Focus();
                 return false;
             }
+
+            //if (Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity2))
+            //{
+            //    error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
+            //    txtMilkTeaQuantity.Focus();
+            //    return false;
+            //}
             return true;
 
         }
@@ -128,15 +156,21 @@ namespace PRN292
 
         private void dgvMilkTea_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            CategoryDTO dtoo = dgvMilkTea.SelectedRows[4].DataBoundItem as CategoryDTO;
-            cboCategory.SelectedItem = dtoo;
+            index = dgvMilkTea.CurrentCell == null ? -1 : dgvMilkTea.CurrentCell.RowIndex;
+            if(index != -1)
+            {
+                txtMilkTeaID.Text = dgvMilkTea.Rows[index].Cells[0].Value.ToString();
+                txtMilkTeaName.Text = dgvMilkTea.Rows[index].Cells[1].Value.ToString();
+                txtMilkTeaQuantity.Text = dgvMilkTea.Rows[index].Cells[2].Value.ToString();
+                txtMilkTeaPrice.Text = dgvMilkTea.Rows[index].Cells[3].Value.ToString();
+                
+            }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (CheckMilkTeaName())
+            if (CheckMilkTeaName() && CheckMilkTeaQuantity() && CheckMilkTeaPrice())
             {
-                if(CheckMilkTeaQuantity()){
                     CategoryDTO obj = (CategoryDTO)cboCategory.SelectedItem;
                     MilkTeaDTO dto = new MilkTeaDTO
                     {
@@ -149,9 +183,8 @@ namespace PRN292
                     if (dao.Update(dto))
                     {
                         MessageBox.Show("Update successfully.", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadData();
                     }
-                }
+                    LoadData();
             }
         }
         private void btnDelete_Click(object sender, EventArgs e)
@@ -167,6 +200,29 @@ namespace PRN292
                 dao.Delete(MilkTeaID);
                 LoadData();
                 MessageBox.Show("Delete successfully. ", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void dgvMilkTea_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index = dgvMilkTea.CurrentCell == null ? -1 : dgvMilkTea.CurrentCell.RowIndex;
+            if (index != -1)
+            {
+                txtMilkTeaID.Text = dgvMilkTea.Rows[index].Cells[0].Value.ToString();
+                txtMilkTeaName.Text = dgvMilkTea.Rows[index].Cells[1].Value.ToString();
+                txtMilkTeaQuantity.Text = dgvMilkTea.Rows[index].Cells[2].Value.ToString();
+                MilkTeaDTO obj = dgvMilkTea.SelectedRows[0].DataBoundItem as MilkTeaDTO;
+                listCategory = dao.GetListCategory();
+                int i = 0;
+                foreach (CategoryDTO dto in listCategory)
+                {
+                    if (dto.CategoryID.Equals(obj.Category))
+                        cboCategory.SelectedIndex = i;
+                    i++;
+                }
+                txtMilkTeaPrice.Text = dgvMilkTea.Rows[index].Cells[3].Value.ToString();
+                string cateID = dao.getCategoryIDByMilkTeaID(txtMilkTeaID.Text);
+                cboCategory.SelectedItem = cateID;
             }
         }
     }

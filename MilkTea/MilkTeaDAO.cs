@@ -32,7 +32,7 @@ namespace MilkTea
                         MilkTeaName = read.GetString(1),
                         Quantity = read.GetInt32(2),
                         Price = (float)read.GetDouble(3),
-                        Category = read.GetString(4)
+                        Category = read.GetString(5)
                     };
                 //string M  ilkTeaID = read.GetString(0);
                 //    string MilkTeaName = read.GetString(1);
@@ -51,7 +51,7 @@ namespace MilkTea
             conn.Close();
             return list;
         }
-        /*public MilkTeaDTO FindProduct(int ID)
+        public MilkTeaDTO FindProduct(string ID)
         {
             MilkTeaDTO milkTea = null;
             string sql = "select * from MilkTeas where MilkTeaID=@ID";
@@ -73,7 +73,7 @@ namespace MilkTea
                         milkTea.MilkTeaID = reader.GetString(0);
                         milkTea.MilkTeaName = reader.GetString(1);
                         milkTea.Quantity = reader.GetInt32(2);
-                      *//*  milkTea.Price = (float)reader.GetDecimal(3);*//*
+                        milkTea.Price = (float)reader.GetDouble(3);
                         milkTea.Category = reader.GetString(4);
                     }
                 }
@@ -111,7 +111,7 @@ namespace MilkTea
             }
             cnn.Close();
             return result;
-        }*/
+        }
         public List<CategoryDTO> GetListCategory() {
             List<CategoryDTO> list = new List<CategoryDTO>();
             string sql = "select CategoryID,CategoryName from Category";
@@ -165,6 +165,26 @@ namespace MilkTea
             check = cmd.ExecuteNonQuery() > 0;
             conn.Close();
             return check;
+        }
+
+        public string getCategoryIDByMilkTeaID(string milkID)
+        {
+            string result = null;
+            string sql = "Select CategoryID from MilkTeas where MilkTeaID = @ID";
+            SqlConnection conn = DBConnection.GetConnection();
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@ID", milkID);
+            SqlDataReader ra = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            if(ra.HasRows)
+            {
+                if(ra.Read())
+                {
+                    result = ra["CategoryID"].ToString();
+                }
+            }
+            conn.Close();
+            return result;
         }
     }
 }

@@ -50,8 +50,10 @@ namespace PRN292
                 {
                     if (role.Equals("AD"))
                     {
+                        this.Hide();
                         adminFrm ad = new adminFrm(UserID);
                         DialogResult dialog = ad.ShowDialog();
+                        this.Close();
                     }
                     else
                     {

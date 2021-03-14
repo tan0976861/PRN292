@@ -47,8 +47,12 @@ namespace PRN292
             this.lblHello = new System.Windows.Forms.Label();
             this.cboCategory = new System.Windows.Forms.ComboBox();
             this.error1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.error2 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.error3 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMilkTea)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.error1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.error2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.error3)).BeginInit();
             this.SuspendLayout();
             // 
             // txtHello
@@ -67,6 +71,7 @@ namespace PRN292
             this.dgvMilkTea.RowTemplate.Height = 24;
             this.dgvMilkTea.Size = new System.Drawing.Size(743, 538);
             this.dgvMilkTea.TabIndex = 1;
+            this.dgvMilkTea.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMilkTea_CellClick);
             this.dgvMilkTea.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMilkTea_CellContentClick);
             // 
             // label1
@@ -192,6 +197,14 @@ namespace PRN292
             // 
             this.error1.ContainerControl = this;
             // 
+            // error2
+            // 
+            this.error2.ContainerControl = this;
+            // 
+            // error3
+            // 
+            this.error3.ContainerControl = this;
+            // 
             // adminFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -218,6 +231,8 @@ namespace PRN292
             this.Load += new System.EventHandler(this.adminFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMilkTea)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.error1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.error2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.error3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,5 +257,7 @@ namespace PRN292
         private System.Windows.Forms.Label lblHello;
         private System.Windows.Forms.ComboBox cboCategory;
         private System.Windows.Forms.ErrorProvider error1;
+        private System.Windows.Forms.ErrorProvider error2;
+        private System.Windows.Forms.ErrorProvider error3;
     }
 }
