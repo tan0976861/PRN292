@@ -110,7 +110,7 @@ namespace PRN292
         }
         private Boolean CheckMilkTeaPrice()
         {
-            string regexQuantity = @"^\d+(.)?\d+$";
+            string regexQuantity = @"^\d+(.\d{1,2})?$";
 
             if (string.IsNullOrEmpty(txtMilkTeaPrice.Text))
             {
@@ -220,5 +220,7 @@ namespace PRN292
                 cboCategory.SelectedItem = cateID;
             }
         }
+
+
     }
 }
