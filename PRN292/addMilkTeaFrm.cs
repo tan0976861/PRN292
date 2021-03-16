@@ -25,8 +25,6 @@ namespace PRN292
         public void LoadData()
         {
             ListCategory = dao.GetListCategory();
-
-
             cboCategory.Items.Clear();
             foreach (CategoryDTO dto in ListCategory)
             {

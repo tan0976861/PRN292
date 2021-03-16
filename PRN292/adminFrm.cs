@@ -51,12 +51,34 @@ namespace PRN292
             //cboCategory.DataSource = listCategory;
             //cboCategory.DisplayMember = "CategoryID - CategoryName";
             
-
-            txtMilkTeaID.Enabled = false;
             dgvMilkTea.DataSource = list;
         }
-        private Boolean CheckMilkTeaName()
+        private Boolean CheckData()
         {
+            MilkTeaDTO dto = dao.FindProduct(txtMilkTeaID.Text);
+            if (dto != null)
+            {
+                error1.SetError(txtMilkTeaID, "ID is duplicate !");
+                txtMilkTeaID.Focus();
+                return false;
+            }
+            else if (string.IsNullOrEmpty(txtMilkTeaID.Text))
+            {
+                error1.SetError(txtMilkTeaID, "ID can't be blank !");
+                txtMilkTeaID.Focus();
+                return false;
+            }
+            else if (txtMilkTeaID.Text.Length > 50)
+            {
+                error1.SetError(txtMilkTeaID, "ID max length is 50!");
+                txtMilkTeaID.Focus();
+                return false;
+            }
+            else
+            {
+                error1.SetError(txtMilkTeaID, "");
+            }
+
             if (string.IsNullOrEmpty(txtMilkTeaName.Text))
             {
                 error1.SetError(txtMilkTeaName, "Name can't be blank !");
@@ -74,43 +96,7 @@ namespace PRN292
             {
                 error1.SetError(txtMilkTeaName,"");
             }
-            return true;
-        }
-        private Boolean CheckMilkTeaQuantity()
-        {
-            string regexQuantity = @"^\d+$";
-
-            if (string.IsNullOrEmpty(txtMilkTeaQuantity.Text))
-            {
-                error1.SetError(txtMilkTeaQuantity, "Quantity can't be blank !");
-                txtMilkTeaQuantity.Focus();
-                return false;
-            }
-            if (txtMilkTeaQuantity.Text.Length > 50)
-            {
-                error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
-                txtMilkTeaQuantity.Focus();
-                return false;
-            }
-            
-            if(!Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity))
-            {
-                error1.SetError(txtMilkTeaQuantity, "Quantity only contains number characters");
-                txtMilkTeaQuantity.Focus();
-                return false;
-            }
-            else
-            {
-                error1.SetError(txtMilkTeaQuantity, "");
-            }
-
-            
-            return true;
-
-        }
-        private Boolean CheckMilkTeaPrice()
-        {
-            string regexQuantity = @"^\d+(.\d{1,2})?$";
+            string regexPrice = @"^\d+(.\d{1,2})?$";
 
             if (string.IsNullOrEmpty(txtMilkTeaPrice.Text))
             {
@@ -125,7 +111,7 @@ namespace PRN292
                 return false;
             }
 
-            if (!Regex.IsMatch(txtMilkTeaPrice.Text, regexQuantity))
+            if (!Regex.IsMatch(txtMilkTeaPrice.Text, regexPrice))
             {
                 error1.SetError(txtMilkTeaPrice, "Price only contains number characters");
                 txtMilkTeaPrice.Focus();
@@ -135,6 +121,58 @@ namespace PRN292
             {
                 error1.SetError(txtMilkTeaPrice, "");
             }
+            string regexQuantity = @"^\d+$";
+
+            if (string.IsNullOrEmpty(txtMilkTeaQuantity.Text))
+            {
+                error1.SetError(txtMilkTeaQuantity, "Quantity can't be blank !");
+                txtMilkTeaQuantity.Focus();
+                return false;
+            }
+            if (txtMilkTeaQuantity.Text.Length > 50)
+            {
+                error1.SetError(txtMilkTeaQuantity, "Quantity max length is 50!");
+                txtMilkTeaQuantity.Focus();
+                return false;
+            }
+
+            if (!Regex.IsMatch(txtMilkTeaQuantity.Text, regexQuantity))
+            {
+                error1.SetError(txtMilkTeaQuantity, "Quantity only contains number characters");
+                txtMilkTeaQuantity.Focus();
+                return false;
+            }
+            else
+            {
+                error1.SetError(txtMilkTeaQuantity, "");
+            }
+            if (string.IsNullOrEmpty(txtImage.Text))
+            {
+                error1.SetError(txtImage, "Image can't be blank !");
+                txtImage.Focus();
+                return false;
+            }
+            else if(txtImage.Text.Length > 500)
+            {
+                error1.SetError(txtImage, "Image max length is 500 !");
+                return false;
+            }
+            else
+            {
+                error1.SetError(txtImage,"");
+            }
+
+            return true;
+        }
+        private Boolean CheckMilkTeaQuantity()
+        {
+            
+            return true;
+
+        }
+        private Boolean CheckMilkTeaPrice()
+        {
+            
             return true;
 
         }
@@ -164,7 +202,7 @@ namespace PRN292
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (CheckMilkTeaName() && CheckMilkTeaQuantity() && CheckMilkTeaPrice())
+            if (CheckData() && CheckMilkTeaQuantity() && CheckMilkTeaPrice())
             {
                     CategoryDTO obj = (CategoryDTO)cboCategory.SelectedItem;
                     MilkTeaDTO dto = new MilkTeaDTO
@@ -173,7 +211,8 @@ namespace PRN292
                         MilkTeaName = txtMilkTeaName.Text,
                         Quantity = int.Parse(txtMilkTeaQuantity.Text),
                         Price = float.Parse(txtMilkTeaPrice.Text),
-                        Category = obj.CategoryID
+                        Category = obj.CategoryID,
+                        Image = txtImage.Text
                     };
                     if (dao.Update(dto))
                     {
@@ -184,18 +223,7 @@ namespace PRN292
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (txtMilkTeaID.Text == "")
-            {
-                MessageBox.Show("Please choose MilkTea you want to remove. ", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            if (MessageBox.Show("Do you want to delete ?", "Announce", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-            {
-                string MilkTeaID = txtMilkTeaID.Text;
-                dao.Delete(MilkTeaID);
-                LoadData();
-                MessageBox.Show("Delete successfully. ", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+
         }
 
         private void dgvMilkTea_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -205,7 +233,8 @@ namespace PRN292
             {
                 txtMilkTeaID.Text = dgvMilkTea.Rows[index].Cells[0].Value.ToString();
                 txtMilkTeaName.Text = dgvMilkTea.Rows[index].Cells[1].Value.ToString();
-                txtMilkTeaQuantity.Text = dgvMilkTea.Rows[index].Cells[2].Value.ToString();
+                txtMilkTeaPrice.Text = dgvMilkTea.Rows[index].Cells[2].Value.ToString();
+                txtMilkTeaQuantity.Text = dgvMilkTea.Rows[index].Cells[3].Value.ToString();
                 MilkTeaDTO obj = dgvMilkTea.SelectedRows[0].DataBoundItem as MilkTeaDTO;
                 listCategory = dao.GetListCategory();
                 int i = 0;
@@ -215,12 +244,51 @@ namespace PRN292
                         cboCategory.SelectedIndex = i;
                     i++;
                 }
-                txtMilkTeaPrice.Text = dgvMilkTea.Rows[index].Cells[3].Value.ToString();
+
                 string cateID = dao.getCategoryIDByMilkTeaID(txtMilkTeaID.Text);
                 cboCategory.SelectedItem = cateID;
+                txtImage.Text = dgvMilkTea.Rows[index].Cells[5].Value.ToString();
+                picbMilkTea.Image = Image.FromFile(txtImage.Text);
+            }
+            txtMilkTeaID.Enabled = false;
+            btnAdd.Enabled = false;
+            btnUpdate.Enabled = true;
+        }
+         
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlgOpen = new OpenFileDialog();
+            dlgOpen.Filter = "Bitmap(*.bmp)|*.bmp|JPEG(*.jpg)|*.jpg|GIF(*.gif)|*.gif|All files(*.*)|*.*";
+            dlgOpen.FilterIndex = 2;
+            dlgOpen.Title = "Chọn ảnh minh hoạ cho sản phẩm";
+            if (dlgOpen.ShowDialog() == DialogResult.OK)
+            {
+                picbMilkTea.Image = Image.FromFile(dlgOpen.FileName);
+                txtImage.Text = dlgOpen.FileName;
             }
         }
 
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            txtMilkTeaID.Text = "" ;
+            txtMilkTeaName.Text = "" ;
+            txtMilkTeaPrice.Text = "";
+            txtMilkTeaQuantity.Text = "";
+            txtImage.Text = "";
+            
+            txtMilkTeaID.Enabled = true;
+            btnAdd.Enabled = true;
+            btnUpdate.Enabled = false;
+        }
     }
 }
