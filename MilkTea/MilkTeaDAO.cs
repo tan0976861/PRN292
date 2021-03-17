@@ -73,8 +73,8 @@ namespace MilkTea
                         milkTea = new MilkTeaDTO();
                         milkTea.MilkTeaID = reader.GetString(0);
                         milkTea.MilkTeaName = reader.GetString(1);
-                        milkTea.Quantity = reader.GetInt32(2);
-                        milkTea.Price = (float)reader.GetDouble(3);
+                        milkTea.Price = (float)reader.GetDouble(2);
+                        milkTea.Quantity = reader.GetInt32(3);
                         milkTea.Category = reader.GetString(4);
                         milkTea.Image = reader.GetString(5);
                     }

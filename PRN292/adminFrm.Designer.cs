@@ -131,7 +131,7 @@ namespace PRN292
             this.btnRefresh.Location = new System.Drawing.Point(740, 26);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(72, 23);
-            this.btnRefresh.TabIndex = 37;
+            this.btnRefresh.TabIndex = 29;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
@@ -144,7 +144,7 @@ namespace PRN292
             this.btnClose.Location = new System.Drawing.Point(1002, 476);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(146, 39);
-            this.btnClose.TabIndex = 36;
+            this.btnClose.TabIndex = 34;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -155,7 +155,7 @@ namespace PRN292
             this.btnAddImage.Location = new System.Drawing.Point(859, 26);
             this.btnAddImage.Name = "btnAddImage";
             this.btnAddImage.Size = new System.Drawing.Size(82, 74);
-            this.btnAddImage.TabIndex = 35;
+            this.btnAddImage.TabIndex = 30;
             this.btnAddImage.Text = "Add Image";
             this.btnAddImage.UseVisualStyleBackColor = true;
             this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
@@ -176,7 +176,7 @@ namespace PRN292
             this.txtImage.Multiline = true;
             this.txtImage.Name = "txtImage";
             this.txtImage.Size = new System.Drawing.Size(247, 48);
-            this.txtImage.TabIndex = 33;
+            this.txtImage.TabIndex = 28;
             // 
             // label7
             // 
@@ -195,7 +195,7 @@ namespace PRN292
             this.cboCategory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cboCategory.Name = "cboCategory";
             this.cboCategory.Size = new System.Drawing.Size(247, 24);
-            this.cboCategory.TabIndex = 30;
+            this.cboCategory.TabIndex = 27;
             // 
             // btnDelete
             // 
@@ -206,7 +206,7 @@ namespace PRN292
             this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(156, 39);
-            this.btnDelete.TabIndex = 29;
+            this.btnDelete.TabIndex = 33;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -220,7 +220,7 @@ namespace PRN292
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(166, 39);
-            this.btnUpdate.TabIndex = 28;
+            this.btnUpdate.TabIndex = 32;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -234,7 +234,7 @@ namespace PRN292
             this.btnAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(163, 39);
-            this.btnAdd.TabIndex = 27;
+            this.btnAdd.TabIndex = 31;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -245,7 +245,7 @@ namespace PRN292
             this.txtMilkTeaPrice.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtMilkTeaPrice.Name = "txtMilkTeaPrice";
             this.txtMilkTeaPrice.Size = new System.Drawing.Size(247, 22);
-            this.txtMilkTeaPrice.TabIndex = 26;
+            this.txtMilkTeaPrice.TabIndex = 25;
             // 
             // txtMilkTeaQuantity
             // 
@@ -253,7 +253,7 @@ namespace PRN292
             this.txtMilkTeaQuantity.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtMilkTeaQuantity.Name = "txtMilkTeaQuantity";
             this.txtMilkTeaQuantity.Size = new System.Drawing.Size(247, 22);
-            this.txtMilkTeaQuantity.TabIndex = 25;
+            this.txtMilkTeaQuantity.TabIndex = 26;
             // 
             // txtMilkTeaName
             // 
