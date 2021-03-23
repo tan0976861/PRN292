@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoryDAO.cs" />
     <Compile Include="CategoryDTO.cs" />
     <Compile Include="DBConnection.cs" />
     <Compile Include="MilkTeaDTO.cs" />

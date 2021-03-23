@@ -14,14 +14,16 @@ namespace PRN292
 {
     public partial class adminFrm : Form
     {
-        MilkTeaDAO dao = new MilkTeaDAO();
+        MilkTeaDAO daoMT = new MilkTeaDAO();
+        CategoryDAO daoCT = new CategoryDAO();
         List<MilkTeaDTO> list;
         List<CategoryDTO> listCategory;
         int index;
+        int index2;
         public adminFrm()
         {
             InitializeComponent();
-            dao = new MilkTeaDAO();
+            daoMT = new MilkTeaDAO();
         }
         public adminFrm(string user)
         {
@@ -30,18 +32,8 @@ namespace PRN292
         }
         public void LoadData()
         {
-            listCategory = dao.GetListCategory();
-            list = dao.GetListMilkTea();
-
-           /* txtMilkTeaID.DataBindings.Clear();
-            txtMilkTeaName.DataBindings.Clear();
-            txtMilkTeaQuantity.DataBindings.Clear();
-            txtMilkTeaPrice.DataBindings.Clear();
-
-            txtMilkTeaID.DataBindings.Add("Text", list, "MilkTeaID");
-            txtMilkTeaName.DataBindings.Add("Text", list, "MilkTeaName");
-            txtMilkTeaQuantity.DataBindings.Add("Text", list, "Quantity");
-            txtMilkTeaPrice.DataBindings.Add("Text", list, "Price");*/
+            listCategory = daoCT.GetListCategory();
+            list = daoMT.GetListMilkTea();
 
             cboCategory.Items.Clear();
             foreach (CategoryDTO dto in listCategory)
@@ -52,11 +44,12 @@ namespace PRN292
             //cboCategory.DisplayMember = "CategoryID - CategoryName";
             
             dgvMilkTea.DataSource = list;
+            dgvCategory.DataSource = listCategory;
             btnUpdate.Enabled = false;
         }
         private Boolean CheckDataToAdd()
         {
-            MilkTeaDTO dto = dao.FindProduct(txtMilkTeaID.Text);
+            MilkTeaDTO dto = daoMT.FindProduct(txtMilkTeaID.Text);
             if (dto != null)
             {
                 error1.SetError(txtMilkTeaID, "ID is duplicate !");
@@ -165,9 +158,49 @@ namespace PRN292
 
             return true;
         }
-        private Boolean CheckMilkTeaQuantity()
+        private Boolean CheckDataCategoryToAdd()
         {
-            
+            CategoryDTO dto = daoCT.FindCategory(txtCategoryID.Text);
+            if (dto != null)
+            {
+                error1.SetError(txtCategoryID, "ID is duplicate !");
+                txtCategoryID.Focus();
+                return false;
+            }
+            else if (string.IsNullOrEmpty(txtCategoryID.Text))
+            {
+                error1.SetError(txtCategoryID, "ID can't be blank !");
+                txtCategoryID.Focus();
+                return false;
+            }
+            else if (txtCategoryID.Text.Length > 50)
+            {
+                error1.SetError(txtCategoryID, "ID max length is 50!");
+                txtCategoryID.Focus();
+                return false;
+            }
+            else
+            {
+                error1.SetError(txtCategoryID, "");
+            }
+
+            if (string.IsNullOrEmpty(txtCategoryName.Text))
+            {
+                error1.SetError(txtCategoryName, "Name can't be blank !");
+                txtCategoryName.Focus();
+                return false;
+            }
+
+            else if (txtCategoryName.Text.Length >= 50)
+            {
+                error1.SetError(txtCategoryName, "Name max length is 50!");
+                txtCategoryName.Focus();
+                return false;
+            }
+            else
+            {
+                error1.SetError(txtCategoryName, "");
+            }
             return true;
 
         }
@@ -284,7 +317,7 @@ namespace PRN292
                     Category = obj.CategoryID,
                     Image = txtImage.Text
                 };
-                if (dao.AddNewMilkTea(dto))
+                if (daoMT.AddNewMilkTea(dto))
                 {
                     MessageBox.Show("Add success !!!");
                 }
@@ -292,6 +325,7 @@ namespace PRN292
                 {
                     MessageBox.Show("Add fail !!!");
                 }
+                LoadData();
             }
         }
 
@@ -322,16 +356,35 @@ namespace PRN292
                         Category = obj.CategoryID,
                         Image = txtImage.Text
                     };
-                    if (dao.Update(dto))
+                    if (daoMT.Update(dto))
                     {
                         MessageBox.Show("Update successfully.", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    LoadData();
+                LoadData();
             }
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if (txtMilkTeaID.Text == "")
+            {
+                MessageBox.Show("Please input the ID to Delete");
+                return;
+            }
+            if (MessageBox.Show("Do you want to delete ", "Announce", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                string ID = txtMilkTeaID.Text;
+                if (daoMT.Delete(ID))
+                {
+                    LoadData();
+                    Refresh();
+                    MessageBox.Show("Delete success");
+                }
+                else
+                {
+                    MessageBox.Show("Delete fail!");
+                }
 
+            }
         }
 
         private void dgvMilkTea_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -344,7 +397,7 @@ namespace PRN292
                 txtMilkTeaPrice.Text = dgvMilkTea.Rows[index].Cells[2].Value.ToString();
                 txtMilkTeaQuantity.Text = dgvMilkTea.Rows[index].Cells[3].Value.ToString();
                 MilkTeaDTO obj = dgvMilkTea.Rows[index].DataBoundItem as MilkTeaDTO;
-                listCategory = dao.GetListCategory();
+                listCategory = daoCT.GetListCategory();
                 int i = 0;
                 foreach (CategoryDTO dto in listCategory)
                 {
@@ -353,7 +406,7 @@ namespace PRN292
                     i++;
                 }
 
-                string cateID = dao.getCategoryIDByMilkTeaID(txtMilkTeaID.Text);
+                string cateID = daoMT.getCategoryIDByMilkTeaID(txtMilkTeaID.Text);
                 cboCategory.SelectedItem = cateID;
                 txtImage.Text = dgvMilkTea.Rows[index].Cells[5].Value.ToString();
                 picbMilkTea.Image = Image.FromFile(txtImage.Text);
@@ -397,6 +450,111 @@ namespace PRN292
             txtMilkTeaID.Enabled = true;
             btnAdd.Enabled = true;
             btnUpdate.Enabled = false;
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            if(txtSearch.Text != "")
+            {
+                list = daoMT.SearchMilkTea(txtSearch.Text);
+                dgvMilkTea.DataSource = list;
+            }
+            else
+            {
+                LoadData();
+            }
+        }
+
+        private void dgvMilkTea_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvCategory_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvCategory_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index2 = dgvCategory.CurrentCell == null ? -1 : dgvCategory.CurrentCell.RowIndex;
+            if(index2 != -1)
+            {
+                txtCategoryID.Text = dgvCategory.Rows[index2].Cells[0].Value.ToString();
+                txtCategoryName.Text = dgvCategory.Rows[index2].Cells[1].Value.ToString();
+            }
+        }
+
+        private void Category_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRefreshCategory_Click(object sender, EventArgs e)
+        {
+            txtCategoryID.Text = "";
+            txtCategoryName.Text = "";
+        }
+
+        private void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            if (CheckDataCategoryToAdd())
+            {
+                string CategoryID = txtCategoryID.Text;
+                string CategoryName = txtCategoryName.Text;
+                CategoryDTO dto = new CategoryDTO(CategoryID, CategoryName);
+                if (daoCT.Add(dto))
+                {
+                    MessageBox.Show("Add success !!!");
+                }
+                else
+                {
+                    MessageBox.Show("Add fail !!!");
+                }
+                LoadData();
+            }
+        }
+
+        private void btnUpdateCategory_Click(object sender, EventArgs e)
+        {
+            if (CheckDataToUpdate())
+            {
+                string CategoryID = txtCategoryID.Text;
+                string CategoryName = txtCategoryName.Text;
+                CategoryDTO dto = new CategoryDTO(CategoryID, CategoryName);
+                if (daoCT.Update(dto))
+                {
+                    MessageBox.Show("Update successfully.", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Update fail.", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                LoadData();
+            }
+        }
+
+        private void btnDeleteCategory_Click(object sender, EventArgs e)
+        {
+            if (txtCategoryID.Text == "")
+            {
+                MessageBox.Show("Please input the ID to Delete");
+                return;
+            }
+            if (MessageBox.Show("Do you want to delete ", "Announce", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                string ID = txtCategoryID.Text;
+                if (daoCT.Delete(ID))
+                {
+                    LoadData();
+                    Refresh();
+                    MessageBox.Show("Delete success");
+                }
+                else
+                {
+                    MessageBox.Show("Delete fail!");
+                }
+            }
         }
     }
 }

@@ -88,6 +88,7 @@ namespace MilkTea
 
             return milkTea;
         }
+
         public bool AddNewMilkTea(MilkTeaDTO dto)
         {
             bool result;
@@ -108,37 +109,14 @@ namespace MilkTea
                 }
                 result = cmd.ExecuteNonQuery() > 0;
             }
-            catch (Exception e)
+            catch 
             {
                 return false;
             }
             cnn.Close();
             return result;
         }
-        public List<CategoryDTO> GetListCategory() {
-            List<CategoryDTO> list = new List<CategoryDTO>();
-            string sql = "select CategoryID,CategoryName from Category";
-            SqlConnection conn = DBConnection.GetConnection();
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    //CategoryDTO dto = new CategoryDTO
-                    //{
-                    //    CategoryID = reader.GetString(0),
-                    //    CategoryName = reader.GetString(1)
-                    //};
-                    string CategoryID = reader.GetString(0);
-                    string CategoryName = reader.GetString(1);
-                    list.Add(new CategoryDTO(CategoryID, CategoryName));
-                }
-            }
-            conn.Close();
-            return list;
-        }
+
 
         public bool Update(MilkTeaDTO dto)
         {
@@ -180,9 +158,9 @@ namespace MilkTea
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@ID", milkID);
             SqlDataReader ra = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-            if(ra.HasRows)
+            if (ra.HasRows)
             {
-                if(ra.Read())
+                if (ra.Read())
                 {
                     result = ra["CategoryID"].ToString();
                 }
@@ -190,5 +168,33 @@ namespace MilkTea
             conn.Close();
             return result;
         }
+        public List<MilkTeaDTO> SearchMilkTea(string milkteaID)
+        {
+            List<MilkTeaDTO> list = new List<MilkTeaDTO>();
+            SqlConnection cnn = DBConnection.GetConnection();
+            string sql = "select * from MilkTeas where MilkTeaID like " + "'%" + milkteaID + "%'";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cnn.Open();
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    MilkTeaDTO milkteaDTO = new MilkTeaDTO()
+                    {
+                        MilkTeaID = reader.GetString(0),
+                        MilkTeaName = reader.GetString(1),
+                        Price = (float)reader.GetDouble(2),
+                        Quantity = reader.GetInt32(3),
+                        Category = reader.GetString(4),
+                        Image = reader.GetString(5)
+                    };
+                    list.Add(milkteaDTO);
+                }
+            }
+            cnn.Close();
+            return list;
+        }
+
     }
 }

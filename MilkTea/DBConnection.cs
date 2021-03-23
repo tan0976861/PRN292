@@ -11,7 +11,7 @@ namespace MilkTea
     {
         public static SqlConnection GetConnection()
         {
-            string conStr = @"Data Source=SE140290\SQLEXPRESS;Initial Catalog=MilkTea;Persist Security Info=True;User ID=sa; Password= 1009";
+            string conStr = @"Data Source=SE140290\SQLEXPRESS;Initial Catalog=MilkTea;User ID=sa;Password = 1009";
             SqlConnection conn = new SqlConnection(conStr);
             return conn;
         }

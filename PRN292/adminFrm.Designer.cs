@@ -33,8 +33,9 @@ namespace PRN292
             this.txtHello = new System.Windows.Forms.Label();
             this.lblHello = new System.Windows.Forms.Label();
             this.error1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.a = new System.Windows.Forms.TabControl();
+            this.MilkTea = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnAddImage = new System.Windows.Forms.Button();
@@ -55,13 +56,26 @@ namespace PRN292
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvMilkTea = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.Category = new System.Windows.Forms.TabPage();
+            this.txtSearchCategory = new System.Windows.Forms.TextBox();
+            this.btnRefreshCategory = new System.Windows.Forms.Button();
+            this.btnCloseCategory = new System.Windows.Forms.Button();
+            this.btnDeleteCategory = new System.Windows.Forms.Button();
+            this.btnUpdateCategory = new System.Windows.Forms.Button();
+            this.btnAddCategory = new System.Windows.Forms.Button();
+            this.txtCategoryName = new System.Windows.Forms.TextBox();
+            this.txtCategoryID = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.dgvCategory = new System.Windows.Forms.DataGridView();
             this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.error1)).BeginInit();
-            this.a.SuspendLayout();
+            this.MilkTea.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbMilkTea)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMilkTea)).BeginInit();
+            this.Category.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCategory)).BeginInit();
             this.SuspendLayout();
             // 
             // txtHello
@@ -83,20 +97,21 @@ namespace PRN292
             // 
             this.error1.ContainerControl = this;
             // 
-            // a
+            // MilkTea
             // 
-            this.a.Controls.Add(this.tabPage1);
-            this.a.Controls.Add(this.tabPage2);
-            this.a.Location = new System.Drawing.Point(4, 49);
-            this.a.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.a.Name = "a";
-            this.a.SelectedIndex = 0;
-            this.a.Size = new System.Drawing.Size(1379, 629);
-            this.a.TabIndex = 18;
+            this.MilkTea.Controls.Add(this.tabPage1);
+            this.MilkTea.Controls.Add(this.Category);
+            this.MilkTea.Location = new System.Drawing.Point(4, 49);
+            this.MilkTea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MilkTea.Name = "MilkTea";
+            this.MilkTea.SelectedIndex = 0;
+            this.MilkTea.Size = new System.Drawing.Size(1379, 629);
+            this.MilkTea.TabIndex = 18;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Gainsboro;
+            this.tabPage1.Controls.Add(this.txtSearch);
             this.tabPage1.Controls.Add(this.btnRefresh);
             this.tabPage1.Controls.Add(this.btnClose);
             this.tabPage1.Controls.Add(this.btnAddImage);
@@ -125,6 +140,14 @@ namespace PRN292
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "MilkTea";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(83, 212);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(247, 22);
+            this.txtSearch.TabIndex = 35;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // btnRefresh
             // 
@@ -319,7 +342,7 @@ namespace PRN292
             // dgvMilkTea
             // 
             this.dgvMilkTea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMilkTea.Location = new System.Drawing.Point(-19, 209);
+            this.dgvMilkTea.Location = new System.Drawing.Point(-4, 239);
             this.dgvMilkTea.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvMilkTea.Name = "dgvMilkTea";
             this.dgvMilkTea.RowHeadersWidth = 51;
@@ -327,17 +350,148 @@ namespace PRN292
             this.dgvMilkTea.Size = new System.Drawing.Size(1373, 234);
             this.dgvMilkTea.TabIndex = 2;
             this.dgvMilkTea.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMilkTea_CellClick);
+            this.dgvMilkTea.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMilkTea_CellContentClick_1);
             // 
-            // tabPage2
+            // Category
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(1371, 600);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Category";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.Category.BackColor = System.Drawing.Color.Gainsboro;
+            this.Category.Controls.Add(this.txtSearchCategory);
+            this.Category.Controls.Add(this.btnRefreshCategory);
+            this.Category.Controls.Add(this.btnCloseCategory);
+            this.Category.Controls.Add(this.btnDeleteCategory);
+            this.Category.Controls.Add(this.btnUpdateCategory);
+            this.Category.Controls.Add(this.btnAddCategory);
+            this.Category.Controls.Add(this.txtCategoryName);
+            this.Category.Controls.Add(this.txtCategoryID);
+            this.Category.Controls.Add(this.label12);
+            this.Category.Controls.Add(this.label13);
+            this.Category.Controls.Add(this.dgvCategory);
+            this.Category.Location = new System.Drawing.Point(4, 25);
+            this.Category.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Category.Name = "Category";
+            this.Category.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Category.Size = new System.Drawing.Size(1371, 600);
+            this.Category.TabIndex = 1;
+            this.Category.Text = "Category";
+            this.Category.Click += new System.EventHandler(this.Category_Click);
+            // 
+            // txtSearchCategory
+            // 
+            this.txtSearchCategory.Location = new System.Drawing.Point(86, 216);
+            this.txtSearchCategory.Name = "txtSearchCategory";
+            this.txtSearchCategory.Size = new System.Drawing.Size(247, 22);
+            this.txtSearchCategory.TabIndex = 56;
+            // 
+            // btnRefreshCategory
+            // 
+            this.btnRefreshCategory.Location = new System.Drawing.Point(743, 30);
+            this.btnRefreshCategory.Name = "btnRefreshCategory";
+            this.btnRefreshCategory.Size = new System.Drawing.Size(72, 23);
+            this.btnRefreshCategory.TabIndex = 48;
+            this.btnRefreshCategory.Text = "Refresh";
+            this.btnRefreshCategory.UseVisualStyleBackColor = true;
+            this.btnRefreshCategory.Click += new System.EventHandler(this.btnRefreshCategory_Click);
+            // 
+            // btnCloseCategory
+            // 
+            this.btnCloseCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnCloseCategory.Image = global::PRN292.Properties.Resources.S_Close_Xs_S_D_2x;
+            this.btnCloseCategory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCloseCategory.Location = new System.Drawing.Point(1005, 480);
+            this.btnCloseCategory.Name = "btnCloseCategory";
+            this.btnCloseCategory.Size = new System.Drawing.Size(146, 39);
+            this.btnCloseCategory.TabIndex = 55;
+            this.btnCloseCategory.Text = "Close";
+            this.btnCloseCategory.UseVisualStyleBackColor = true;
+            // 
+            // btnDeleteCategory
+            // 
+            this.btnDeleteCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnDeleteCategory.Image = global::PRN292.Properties.Resources.SP_Delete_Sm_S_D;
+            this.btnDeleteCategory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDeleteCategory.Location = new System.Drawing.Point(717, 481);
+            this.btnDeleteCategory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDeleteCategory.Name = "btnDeleteCategory";
+            this.btnDeleteCategory.Size = new System.Drawing.Size(156, 39);
+            this.btnDeleteCategory.TabIndex = 53;
+            this.btnDeleteCategory.Text = "Delete";
+            this.btnDeleteCategory.UseVisualStyleBackColor = true;
+            this.btnDeleteCategory.Click += new System.EventHandler(this.btnDeleteCategory_Click);
+            // 
+            // btnUpdateCategory
+            // 
+            this.btnUpdateCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnUpdateCategory.Image = global::PRN292.Properties.Resources.update;
+            this.btnUpdateCategory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateCategory.Location = new System.Drawing.Point(365, 481);
+            this.btnUpdateCategory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnUpdateCategory.Name = "btnUpdateCategory";
+            this.btnUpdateCategory.Size = new System.Drawing.Size(166, 39);
+            this.btnUpdateCategory.TabIndex = 52;
+            this.btnUpdateCategory.Text = "Update";
+            this.btnUpdateCategory.UseVisualStyleBackColor = true;
+            this.btnUpdateCategory.Click += new System.EventHandler(this.btnUpdateCategory_Click);
+            // 
+            // btnAddCategory
+            // 
+            this.btnAddCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btnAddCategory.Image = global::PRN292.Properties.Resources.SP_Add_Sm_S_D_3to2x;
+            this.btnAddCategory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddCategory.Location = new System.Drawing.Point(86, 481);
+            this.btnAddCategory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAddCategory.Name = "btnAddCategory";
+            this.btnAddCategory.Size = new System.Drawing.Size(163, 39);
+            this.btnAddCategory.TabIndex = 50;
+            this.btnAddCategory.Text = "Add";
+            this.btnAddCategory.UseVisualStyleBackColor = true;
+            this.btnAddCategory.Click += new System.EventHandler(this.btnAddCategory_Click);
+            // 
+            // txtCategoryName
+            // 
+            this.txtCategoryName.Location = new System.Drawing.Point(418, 31);
+            this.txtCategoryName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtCategoryName.Name = "txtCategoryName";
+            this.txtCategoryName.Size = new System.Drawing.Size(247, 22);
+            this.txtCategoryName.TabIndex = 43;
+            // 
+            // txtCategoryID
+            // 
+            this.txtCategoryID.Location = new System.Drawing.Point(86, 32);
+            this.txtCategoryID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtCategoryID.Name = "txtCategoryID";
+            this.txtCategoryID.Size = new System.Drawing.Size(247, 22);
+            this.txtCategoryID.TabIndex = 42;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(363, 31);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(45, 17);
+            this.label12.TabIndex = 38;
+            this.label12.Text = "Name";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(36, 37);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(21, 17);
+            this.label13.TabIndex = 37;
+            this.label13.Text = "ID";
+            // 
+            // dgvCategory
+            // 
+            this.dgvCategory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCategory.Location = new System.Drawing.Point(-1, 243);
+            this.dgvCategory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dgvCategory.Name = "dgvCategory";
+            this.dgvCategory.RowHeadersWidth = 51;
+            this.dgvCategory.RowTemplate.Height = 24;
+            this.dgvCategory.Size = new System.Drawing.Size(1373, 234);
+            this.dgvCategory.TabIndex = 36;
+            this.dgvCategory.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategory_CellClick);
+            this.dgvCategory.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategory_CellContentClick);
             // 
             // label6
             // 
@@ -356,7 +510,7 @@ namespace PRN292
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1379, 601);
-            this.Controls.Add(this.a);
+            this.Controls.Add(this.MilkTea);
             this.Controls.Add(this.lblHello);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtHello);
@@ -365,11 +519,14 @@ namespace PRN292
             this.Text = "adminFrm";
             this.Load += new System.EventHandler(this.adminFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.error1)).EndInit();
-            this.a.ResumeLayout(false);
+            this.MilkTea.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picbMilkTea)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMilkTea)).EndInit();
+            this.Category.ResumeLayout(false);
+            this.Category.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCategory)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -380,7 +537,7 @@ namespace PRN292
         private System.Windows.Forms.Label txtHello;
         private System.Windows.Forms.Label lblHello;
         private System.Windows.Forms.ErrorProvider error1;
-        private System.Windows.Forms.TabControl a;
+        private System.Windows.Forms.TabControl MilkTea;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ComboBox cboCategory;
         private System.Windows.Forms.Button btnDelete;
@@ -396,7 +553,7 @@ namespace PRN292
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvMilkTea;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage Category;
         private System.Windows.Forms.TextBox txtImage;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
@@ -404,5 +561,17 @@ namespace PRN292
         private System.Windows.Forms.PictureBox picbMilkTea;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.TextBox txtSearchCategory;
+        private System.Windows.Forms.Button btnRefreshCategory;
+        private System.Windows.Forms.Button btnCloseCategory;
+        private System.Windows.Forms.Button btnDeleteCategory;
+        private System.Windows.Forms.Button btnUpdateCategory;
+        private System.Windows.Forms.Button btnAddCategory;
+        private System.Windows.Forms.TextBox txtCategoryName;
+        private System.Windows.Forms.TextBox txtCategoryID;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.DataGridView dgvCategory;
     }
 }
