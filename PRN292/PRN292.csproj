@@ -56,11 +56,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="adminFrm.cs">
+    <Compile Include="BUS\BillBUS.cs" />
+    <Compile Include="BUS\BillInfoBUS.cs" />
+    <Compile Include="BUS\CategoryBUS.cs" />
+    <Compile Include="BUS\MilkTeaBUS.cs" />
+    <Compile Include="BUS\UserBUS.cs" />
+    <Compile Include="DAO\BillDAO.cs" />
+    <Compile Include="DAO\BillInfoDAO.cs" />
+    <Compile Include="DAO\CategoryDAO.cs" />
+    <Compile Include="DAO\MilkTeaDAO.cs" />
+    <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="DB\DBConnection.cs" />
+    <Compile Include="DTO\Bill.cs" />
+    <Compile Include="DTO\BillInfo.cs" />
+    <Compile Include="DTO\Category.cs" />
+    <Compile Include="DTO\MilkTea.cs" />
+    <Compile Include="DTO\User.cs" />
+    <Compile Include="hoaDonFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="adminFrm.Designer.cs">
-      <DependentUpon>adminFrm.cs</DependentUpon>
+    <Compile Include="hoaDonFrm.Designer.cs">
+      <DependentUpon>hoaDonFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="milkteaFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="milkteaFrm.Designer.cs">
+      <DependentUpon>milkteaFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="categoryFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="categoryFrm.Designer.cs">
+      <DependentUpon>categoryFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="loginFrm.cs">
       <SubType>Form</SubType>
@@ -76,8 +104,26 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="adminFrm.resx">
-      <DependentUpon>adminFrm.cs</DependentUpon>
+    <Compile Include="reportFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reportFrm.Designer.cs">
+      <DependentUpon>reportFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InfrormatonFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InfrormatonFrm.Designer.cs">
+      <DependentUpon>InfrormatonFrm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="hoaDonFrm.resx">
+      <DependentUpon>hoaDonFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="milkteaFrm.resx">
+      <DependentUpon>milkteaFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="categoryFrm.resx">
+      <DependentUpon>categoryFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="loginFrm.resx">
       <DependentUpon>loginFrm.cs</DependentUpon>
@@ -89,6 +135,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reportFrm.resx">
+      <DependentUpon>reportFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfrormatonFrm.resx">
+      <DependentUpon>InfrormatonFrm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -110,18 +162,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{56719fe0-25c2-49ce-9503-3ff085992762}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MilkTea\MilkTea.csproj">
-      <Project>{d39eb958-e394-4d39-99cc-55f8336a7ce3}</Project>
-      <Name>MilkTea</Name>
-    </ProjectReference>
+    <None Include="Resources\main.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\trasua.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\main2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\main3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2-1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S_Close_Xs_S_D%402x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

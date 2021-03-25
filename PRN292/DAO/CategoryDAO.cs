@@ -5,14 +5,15 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace MilkTea
+using PRN292.DTO;
+using PRN292.DB;
+namespace PRN292.DAO
 {
     public class CategoryDAO
     {
-        public List<CategoryDTO> GetListCategory()
+        public List<Category> GetListCategory()
         {
-            List<CategoryDTO> list = new List<CategoryDTO>();
+            List<Category> list = new List<Category>();
             string sql = "select CategoryID,CategoryName from Category";
             SqlConnection conn = DBConnection.GetConnection();
             SqlCommand cmd = new SqlCommand(sql, conn);
@@ -24,13 +25,13 @@ namespace MilkTea
                 {
                     string CategoryID = reader.GetString(0);
                     string CategoryName = reader.GetString(1);
-                    list.Add(new CategoryDTO(CategoryID, CategoryName));
+                    list.Add(new Category(CategoryID, CategoryName));
                 }
             }
             conn.Close();
             return list;
         }
-        public bool Add(CategoryDTO dto)
+        public bool Add(Category dto)
         {
             bool result;
             string sql = "insert Category values (@ID , @Name)";
@@ -56,7 +57,7 @@ namespace MilkTea
         }
 
 
-        public bool Update(CategoryDTO dto)
+        public bool Update(Category dto)
         {
             bool check = false;
             string sql = "Update Category Set CategoryName = @Name Where CategoreID = @ID";
@@ -83,9 +84,9 @@ namespace MilkTea
             conn.Close();
             return check;
         }
-        public CategoryDTO FindCategory(string ID)
+        public Category FindCategory(string ID)
         {
-            CategoryDTO category = null;
+            Category category = null;
             string sql = "select * from Category where CategoryID=@ID";
             SqlConnection cnn = DBConnection.GetConnection();
             SqlCommand cmd = new SqlCommand(sql, cnn);
@@ -104,7 +105,7 @@ namespace MilkTea
                         
                         string CategoryID = reader.GetString(0);
                         string CategoryName = reader.GetString(1);
-                        category = new CategoryDTO(CategoryID,CategoryName);
+                        category = new Category(CategoryID,CategoryName);
                     }
                 }
             }

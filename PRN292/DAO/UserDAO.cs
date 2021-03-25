@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
-using System.Data.SqlClient;
-namespace MilkTea
+using PRN292.DB;
+
+namespace PRN292.DAO
 {
     public class UserDao
     {
-        public UserDao() { }
-
-        public string CheckLogin(string UserID,string Password)
+        public string Login(string UserID, string Password)
         {
-            string role = "fail";
-            string sql = "Select Role From Users Where UserID = @User and Password = @Password";
+            string result = "fail";
+            string sql = "Select UserID From Users Where UserID = @User and Password = @Password";
             SqlConnection cnn = DBConnection.GetConnection();
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("@User", UserID);
@@ -30,7 +30,7 @@ namespace MilkTea
                 {
                     if (reader.Read())
                     {
-                        role = reader.GetString(0); 
+                        result = reader.GetString(0);
                     }
                 }
             }
@@ -39,7 +39,7 @@ namespace MilkTea
                 throw new Exception(e.Message);
             }
             cnn.Close();
-            return role;
+            return result;
         }
-    }
+    }      
 }

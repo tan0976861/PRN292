@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MilkTea
+namespace PRN292.DB
 {
-    class DBConnection
+    public class DBConnection
     {
         public static SqlConnection GetConnection()
         {

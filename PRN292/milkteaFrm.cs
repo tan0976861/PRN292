@@ -1,5 +1,4 @@
 ﻿using System;
-using MilkTea;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,47 +8,48 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using PRN292.BUS;
+using PRN292.DTO;
 
 namespace PRN292
 {
-    public partial class adminFrm : Form
+    public partial class milkteaFrm : Form
     {
-        MilkTeaDAO daoMT = new MilkTeaDAO();
-        CategoryDAO daoCT = new CategoryDAO();
-        List<MilkTeaDTO> list;
-        List<CategoryDTO> listCategory;
+        MilkTeaBUS busMT = new MilkTeaBUS();
+        CategoryBUS busCT = new CategoryBUS();
+        List<MilkTea> list;
+        List<Category> listCategory;
         int index;
         int index2;
-        public adminFrm()
+        public milkteaFrm()
         {
             InitializeComponent();
-            daoMT = new MilkTeaDAO();
+            busMT = new MilkTeaBUS();
         }
-        public adminFrm(string user)
+        public milkteaFrm(string user)
         {
             InitializeComponent();
             lblHello.Text = "Hello " +  user;
         }
         public void LoadData()
         {
-            listCategory = daoCT.GetListCategory();
-            list = daoMT.GetListMilkTea();
+            listCategory = busCT.GetListCategory();
+            list = busMT.GetListMilkTea();
 
             cboCategory.Items.Clear();
-            foreach (CategoryDTO dto in listCategory)
+            foreach (Category dto in listCategory)
             {
-                cboCategory.Items.Add(new CategoryDTO(dto.CategoryID,dto.CategoryName));
+                cboCategory.Items.Add(new Category(dto.CategoryID,dto.CategoryName));
             }
             //cboCategory.DataSource = listCategory;
             //cboCategory.DisplayMember = "CategoryID - CategoryName";
             
             dgvMilkTea.DataSource = list;
-            dgvCategory.DataSource = listCategory;
             btnUpdate.Enabled = false;
         }
         private Boolean CheckDataToAdd()
         {
-            MilkTeaDTO dto = daoMT.FindProduct(txtMilkTeaID.Text);
+            MilkTea dto = busMT.FindProduct(txtMilkTeaID.Text);
             if (dto != null)
             {
                 error1.SetError(txtMilkTeaID, "ID is duplicate !");
@@ -62,9 +62,9 @@ namespace PRN292
                 txtMilkTeaID.Focus();
                 return false;
             }
-            else if (txtMilkTeaID.Text.Length > 50)
+            else if (txtMilkTeaID.Text.Length > 5)
             {
-                error1.SetError(txtMilkTeaID, "ID max length is 50!");
+                error1.SetError(txtMilkTeaID, "ID max length is 5!");
                 txtMilkTeaID.Focus();
                 return false;
             }
@@ -157,58 +157,6 @@ namespace PRN292
             }
 
             return true;
-        }
-        private Boolean CheckDataCategoryToAdd()
-        {
-            CategoryDTO dto = daoCT.FindCategory(txtCategoryID.Text);
-            if (dto != null)
-            {
-                error1.SetError(txtCategoryID, "ID is duplicate !");
-                txtCategoryID.Focus();
-                return false;
-            }
-            else if (string.IsNullOrEmpty(txtCategoryID.Text))
-            {
-                error1.SetError(txtCategoryID, "ID can't be blank !");
-                txtCategoryID.Focus();
-                return false;
-            }
-            else if (txtCategoryID.Text.Length > 50)
-            {
-                error1.SetError(txtCategoryID, "ID max length is 50!");
-                txtCategoryID.Focus();
-                return false;
-            }
-            else
-            {
-                error1.SetError(txtCategoryID, "");
-            }
-
-            if (string.IsNullOrEmpty(txtCategoryName.Text))
-            {
-                error1.SetError(txtCategoryName, "Name can't be blank !");
-                txtCategoryName.Focus();
-                return false;
-            }
-
-            else if (txtCategoryName.Text.Length >= 50)
-            {
-                error1.SetError(txtCategoryName, "Name max length is 50!");
-                txtCategoryName.Focus();
-                return false;
-            }
-            else
-            {
-                error1.SetError(txtCategoryName, "");
-            }
-            return true;
-
-        }
-        private Boolean CheckMilkTeaPrice()
-        {
-            
-            return true;
-
         }
         private Boolean CheckDataToUpdate()
         {
@@ -307,8 +255,8 @@ namespace PRN292
         {
             if (CheckDataToAdd())
             {
-                CategoryDTO obj = (CategoryDTO)cboCategory.SelectedItem;
-                MilkTeaDTO dto = new MilkTeaDTO
+                Category obj = (Category)cboCategory.SelectedItem;
+                MilkTea dto = new MilkTea
                 {
                     MilkTeaID = txtMilkTeaID.Text,
                     MilkTeaName = txtMilkTeaName.Text,
@@ -317,7 +265,7 @@ namespace PRN292
                     Category = obj.CategoryID,
                     Image = txtImage.Text
                 };
-                if (daoMT.AddNewMilkTea(dto))
+                if (busMT.AddNewMilkTea(dto))
                 {
                     MessageBox.Show("Add success !!!");
                 }
@@ -346,8 +294,8 @@ namespace PRN292
         {
             if (CheckDataToUpdate())
             {
-                    CategoryDTO obj = (CategoryDTO)cboCategory.SelectedItem;
-                    MilkTeaDTO dto = new MilkTeaDTO
+                    Category obj = (Category)cboCategory.SelectedItem;
+                    MilkTea dto = new MilkTea
                     {
                         MilkTeaID = txtMilkTeaID.Text,
                         MilkTeaName = txtMilkTeaName.Text,
@@ -356,7 +304,7 @@ namespace PRN292
                         Category = obj.CategoryID,
                         Image = txtImage.Text
                     };
-                    if (daoMT.Update(dto))
+                    if (busMT.Update(dto))
                     {
                         MessageBox.Show("Update successfully.", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -373,7 +321,7 @@ namespace PRN292
             if (MessageBox.Show("Do you want to delete ", "Announce", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 string ID = txtMilkTeaID.Text;
-                if (daoMT.Delete(ID))
+                if (busMT.Delete(ID))
                 {
                     LoadData();
                     Refresh();
@@ -396,17 +344,17 @@ namespace PRN292
                 txtMilkTeaName.Text = dgvMilkTea.Rows[index].Cells[1].Value.ToString();
                 txtMilkTeaPrice.Text = dgvMilkTea.Rows[index].Cells[2].Value.ToString();
                 txtMilkTeaQuantity.Text = dgvMilkTea.Rows[index].Cells[3].Value.ToString();
-                MilkTeaDTO obj = dgvMilkTea.Rows[index].DataBoundItem as MilkTeaDTO;
-                listCategory = daoCT.GetListCategory();
+                MilkTea obj = dgvMilkTea.Rows[index].DataBoundItem as MilkTea;
+                listCategory = busCT.GetListCategory();
                 int i = 0;
-                foreach (CategoryDTO dto in listCategory)
+                foreach (Category dto in listCategory)
                 {
                     if (dto.CategoryID.Equals(obj.Category))
                         cboCategory.SelectedIndex = i;
                     i++;
                 }
 
-                string cateID = daoMT.getCategoryIDByMilkTeaID(txtMilkTeaID.Text);
+                string cateID = busMT.getCategoryIDByMilkTeaID(txtMilkTeaID.Text);
                 cboCategory.SelectedItem = cateID;
                 txtImage.Text = dgvMilkTea.Rows[index].Cells[5].Value.ToString();
                 picbMilkTea.Image = Image.FromFile(txtImage.Text);
@@ -456,7 +404,7 @@ namespace PRN292
         {
             if(txtSearch.Text != "")
             {
-                list = daoMT.SearchMilkTea(txtSearch.Text);
+                list = busMT.SearchMilkTea(txtSearch.Text);
                 dgvMilkTea.DataSource = list;
             }
             else
@@ -469,92 +417,10 @@ namespace PRN292
         {
 
         }
-
-        private void dgvCategory_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvMilkTea_CellContentClick_2(object sender, DataGridViewCellEventArgs e)
         {
 
         }
 
-        private void dgvCategory_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            index2 = dgvCategory.CurrentCell == null ? -1 : dgvCategory.CurrentCell.RowIndex;
-            if(index2 != -1)
-            {
-                txtCategoryID.Text = dgvCategory.Rows[index2].Cells[0].Value.ToString();
-                txtCategoryName.Text = dgvCategory.Rows[index2].Cells[1].Value.ToString();
-            }
-        }
-
-        private void Category_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnRefreshCategory_Click(object sender, EventArgs e)
-        {
-            txtCategoryID.Text = "";
-            txtCategoryName.Text = "";
-        }
-
-        private void btnAddCategory_Click(object sender, EventArgs e)
-        {
-            if (CheckDataCategoryToAdd())
-            {
-                string CategoryID = txtCategoryID.Text;
-                string CategoryName = txtCategoryName.Text;
-                CategoryDTO dto = new CategoryDTO(CategoryID, CategoryName);
-                if (daoCT.Add(dto))
-                {
-                    MessageBox.Show("Add success !!!");
-                }
-                else
-                {
-                    MessageBox.Show("Add fail !!!");
-                }
-                LoadData();
-            }
-        }
-
-        private void btnUpdateCategory_Click(object sender, EventArgs e)
-        {
-            if (CheckDataToUpdate())
-            {
-                string CategoryID = txtCategoryID.Text;
-                string CategoryName = txtCategoryName.Text;
-                CategoryDTO dto = new CategoryDTO(CategoryID, CategoryName);
-                if (daoCT.Update(dto))
-                {
-                    MessageBox.Show("Update successfully.", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Update fail.", "Announce", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                LoadData();
-            }
-        }
-
-        private void btnDeleteCategory_Click(object sender, EventArgs e)
-        {
-            if (txtCategoryID.Text == "")
-            {
-                MessageBox.Show("Please input the ID to Delete");
-                return;
-            }
-            if (MessageBox.Show("Do you want to delete ", "Announce", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                string ID = txtCategoryID.Text;
-                if (daoCT.Delete(ID))
-                {
-                    LoadData();
-                    Refresh();
-                    MessageBox.Show("Delete success");
-                }
-                else
-                {
-                    MessageBox.Show("Delete fail!");
-                }
-            }
-        }
     }
 }

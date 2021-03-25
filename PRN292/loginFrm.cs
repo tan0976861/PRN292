@@ -1,5 +1,4 @@
 ﻿using System;
-using MilkTea; 
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,21 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DAL;
+using PRN292.BUS;
 namespace PRN292
 {
     public partial class loginFrm : Form
     {
-        UserDao dao;
+        UserBUS bus;
         public loginFrm()
         {
             InitializeComponent();
-            dao = new UserDao();
+            bus = new UserBUS();
         }
         public loginFrm(string user)
         {
             InitializeComponent();
-            dao = new UserDao();
+            bus = new UserBUS();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -40,25 +39,17 @@ namespace PRN292
             }
             if (error.Equals(""))
             {
-
-                string role = dao.CheckLogin(UserID, Password);
-                if (role.Equals("fail"))
-                    {
+                string user = bus.Login(UserID, Password);
+                if (user.Equals("fail"))
+                {
                     MessageBox.Show("ID or Password is not correct");
                 }
                 else
                 {
-                    if (role.Equals("AD"))
-                    {
-                        this.Hide();
-                        adminFrm ad = new adminFrm(UserID);
-                        DialogResult dialog = ad.ShowDialog();
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("a");
-                    }
+                    this.Hide();
+                    mainFrm frm = new mainFrm();
+                    frm.ShowDialog(); 
+                    this.Close();
                 }
                 
             }
@@ -70,14 +61,14 @@ namespace PRN292
             
 
 
-        private void loginFrm_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void loginFrm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

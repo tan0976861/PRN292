@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MilkTea
+namespace PRN292.DTO
 {
-    public class CategoryDTO
+    public class Category
     {
         public string CategoryID { get; set; }
         public string CategoryName { get; set; }
@@ -14,7 +14,7 @@ namespace MilkTea
         {
             return CategoryID + "-" + CategoryName;
         }
-        public CategoryDTO(string categoryID,string categoryName)
+        public Category(string categoryID,string categoryName)
         {
             CategoryID = categoryID;
             CategoryName = categoryName;

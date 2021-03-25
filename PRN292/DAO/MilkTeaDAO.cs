@@ -5,16 +5,17 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace MilkTea
+using PRN292.DTO;
+using PRN292.DB;
+namespace PRN292.DAO
 {
     public class MilkTeaDAO
     {
         public MilkTeaDAO() { 
         }
-        public List<MilkTeaDTO> GetListMilkTea()
+        public List<MilkTea> GetListMilkTea()
         {
-            List<MilkTeaDTO> list = new List<MilkTeaDTO>();
+            List<MilkTea> list = new List<MilkTea>();
             
             string sql = "select mt.MilkTeaID,mt.MilkTeaName,mt.Quantity,mt.Price,ct.CategoryName,mt.CategoryID,mt.Image " +
                 "From MilkTeas as mt,Category as ct Where ct.CategoryID = mt.CategoryID";
@@ -26,7 +27,7 @@ namespace MilkTea
             {
                 while(read.Read())
                 {
-                    MilkTeaDTO milkTeaDTO = new MilkTeaDTO()
+                    MilkTea milkTeaDTO = new MilkTea()
                     {
                         MilkTeaID = read.GetString(0),
                         MilkTeaName = read.GetString(1),
@@ -52,9 +53,9 @@ namespace MilkTea
             conn.Close();
             return list;
         }
-        public MilkTeaDTO FindProduct(string ID)
+        public MilkTea FindProduct(string ID)
         {
-            MilkTeaDTO milkTea = null;
+            MilkTea milkTea = null;
             string sql = "select * from MilkTeas where MilkTeaID=@ID";
             SqlConnection cnn = DBConnection.GetConnection();
             SqlCommand cmd = new SqlCommand(sql, cnn);
@@ -70,7 +71,7 @@ namespace MilkTea
                 {
                     if (reader.Read())
                     {
-                        milkTea = new MilkTeaDTO();
+                        milkTea = new MilkTea();
                         milkTea.MilkTeaID = reader.GetString(0);
                         milkTea.MilkTeaName = reader.GetString(1);
                         milkTea.Price = (float)reader.GetDouble(2);
@@ -89,7 +90,7 @@ namespace MilkTea
             return milkTea;
         }
 
-        public bool AddNewMilkTea(MilkTeaDTO dto)
+        public bool AddNewMilkTea(MilkTea dto)
         {
             bool result;
             string sql = "insert MilkTeas values (@ID , @Name, @Quantity, @Price, @Category, @Image)";
@@ -118,7 +119,7 @@ namespace MilkTea
         }
 
 
-        public bool Update(MilkTeaDTO dto)
+        public bool Update(MilkTea dto)
         {
             bool check = false;
             string sql = "Update MilkTeas Set MilkTeaName = @Name, Quantity = @Quantity, Price = @Price, CategoryID = @Category,  Image = @Image Where MilkTeaID = @ID";
@@ -168,11 +169,11 @@ namespace MilkTea
             conn.Close();
             return result;
         }
-        public List<MilkTeaDTO> SearchMilkTea(string milkteaID)
+        public List<MilkTea> SearchMilkTea(string milkteaID)
         {
-            List<MilkTeaDTO> list = new List<MilkTeaDTO>();
+            List<MilkTea> list = new List<MilkTea>();
             SqlConnection cnn = DBConnection.GetConnection();
-            string sql = "select * from MilkTeas where MilkTeaID like " + "'%" + milkteaID + "%'";
+            string sql = "select * from MilkTeas where MilkTeaName like " + "'%" + milkteaID + "%'";
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cnn.Open();
             SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
@@ -180,7 +181,7 @@ namespace MilkTea
             {
                 while (reader.Read())
                 {
-                    MilkTeaDTO milkteaDTO = new MilkTeaDTO()
+                    MilkTea milkteaDTO = new MilkTea()
                     {
                         MilkTeaID = reader.GetString(0),
                         MilkTeaName = reader.GetString(1),
